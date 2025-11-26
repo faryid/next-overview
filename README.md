@@ -42,6 +42,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/b
 ## Footnote
 
 ```javascript
+/** next.config.ts **/
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: "export", // Enables static exports
@@ -50,9 +51,25 @@ const nextConfig = {
   images: {
     unoptimized: true, // Disables image optimization not supported by static export
   },
+  distDir: 'dist', // Rename build directory
 };
 
 module.exports = nextConfig;
 ```
 
 > Note: The output: "export" option replaces the deprecated next export command in newer Next.js versions. 
+
+```yml
+# nextjs.yml
+...
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      ...
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist # Rename build directory
+```
