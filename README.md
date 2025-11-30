@@ -39,25 +39,29 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
 
-## Footnote
+## Deploy on GitHub Pages
+
+Static export settings for hosting under a repository path on GitHub Pages, plus the matching artifact path in your Actions workflow.
 
 ```javascript
 /** next.config.ts **/
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: "export", // Enables static exports
-  basePath: "/your-repo-name", // Replace with your repository name
-  assetPrefix: "/your-repo-name/", // Replace with your repository name
+  output: "export",                 // Enables static exports
+  basePath: "/your-repo-name",      // Replace with your repository name
+  assetPrefix: "/your-repo-name/",  // Replace with your repository name
   images: {
-    unoptimized: true, // Disables image optimization not supported by static export
+    unoptimized: true,              // Disables image optimization not supported by static export
   },
-  distDir: 'dist', // Rename build directory
+  distDir: 'dist',                  // Rename build directory
 };
 
 module.exports = nextConfig;
 ```
 
-> Note: The output: "export" option replaces the deprecated next export command in newer Next.js versions. 
+> Note: The `output: "export"` option replaces the deprecated next export command in newer Next.js versions. 
+
+If you change `distDir`, update the workflow’s `upload-pages-artifact` `path` so it uploads the same directory Next writes to.
 
 ```yml
 # nextjs.yml
